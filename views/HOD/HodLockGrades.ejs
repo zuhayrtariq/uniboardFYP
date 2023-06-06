@@ -1,0 +1,84 @@
+<%- include('partials/hodhead') %>
+<div class="container-fluid py-4">
+    <% if (!inProgSecData.length) { %>
+      <div class="alert alert-primary text-white border-0 " role="alert">
+          <strong>No Record Found </strong> 
+      </div>
+     <% } else{ %>
+      <div class="table-responsive">
+           
+        <div class="card">
+            <div class="table-responsive">
+              <table class="table align-items-center mb-0 table-group-divider">
+                <thead class=" text-white bg-default">
+                  <tr class="align-middle text-center">
+                   
+                    <th class="text-uppercase text-sm font-weight-bolder ">Course Title</th>
+                    
+                    <th class="text-uppercase text-sm font-weight-bolder  ">Section Details</th>
+                    <th class="text-uppercase text-sm font-weight-bolder  ">Semester</th>
+                    
+                    <th class="text-uppercase text-sm font-weight-bolder "> </th>
+                   
+          
+                   
+                   
+                  </tr>
+                </thead>
+                <tbody id="myTable">
+                    <% inProgSecData.forEach(x => { %>
+                     
+                    
+                  <tr class="align-middle text-center text-sm">
+    
+                      <td>
+                      
+                          
+                          <div class="d-flex flex-column justify-content-center px-2 py-2">
+                            <h6 class="mb-0 text-sm "> <%= x.course_title  %> </h6>
+                            <p class="text-xs text-secondary mb-0"><%= x.course_code  %></p>
+                          </div>
+                      
+                      </td>
+                      <td>
+                        <h6 class="mb-0 text-sm "> <%= x.faculty_firstname  %> <%= x.faculty_lastname  %> </h6>
+                        <p class="text-sm font-weight-bold mb-0"><%= x.section_code  %></p>
+                       
+                      </td>
+                   
+                      <td>
+                        <p class="text-sm font-weight-bold mb-0"><%= x.semester_name  %></p>
+                       
+                      </td>
+                      <td>
+                        
+                        <a class="btn  btn-info  " href="./viewmarks?sectionCode=<%=x.section_code%>">View <i class="fas fa-eye"></i></a>
+
+                        <% if (x.hod_lock) { %>
+                            <button disabled class="btn btn-success d-inline"  >Grade Locked (HOD) <i class="fas fa-lock"></i></button>
+
+                          <% }else{%>
+                       
+                       <form action="./lockgrades" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger " onclick="if(confirm('Lock Result For Section: <%=x.section_code%>')){}else{return false;};"    name="status" value="1">Lock Result <i class="fas fa-lock"></i></button>
+                        <button type="submit" class="btn btn-warning " onclick="if(confirm('Unlock Result For Section: <%=x.section_code%>')){}else{return false;};"    name="status" value="2">Remove Faculty Lock <i class="fas fa-unlock"></i></button>
+                          <input type="text" hidden value="<%=x.section_code%>" name="sectionCode">
+
+                        </form>
+                        <% }%>
+                         
+                        
+                      </td>
+                     
+                     
+                    </tr>
+                    <% }) %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+    
+      </div>
+      <% } %>
+      </div>
+<%- include('partials/footer') %>

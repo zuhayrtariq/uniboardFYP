@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="/img/apple-icon.png" />
+    <link rel="icon" type="image/png" href="/img/favicon.ico" />
+    <title>Uniboard</title>
+
+
+    <link
+    href="/vendor/fontawesome-free/css/all.min.css"
+    rel="stylesheet"
+    type="text/css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet" />
+
+  <!-- Custom styles for this template-->
+  <link href="/css/sb-admin-2.min.css" rel="stylesheet" />
+  
+
+  <!-- Custom fonts for this template-->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+      <!-- Bootstrap core JavaScript-->
+      <script src="/vendor/jquery/jquery.min.js"></script>
+      <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  
+      <!-- Core plugin JavaScript-->
+      <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+  
+
+
+<!-- MDB -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/#[[latestVersion]]#/mdb.min.css"
+  rel="stylesheet"
+/>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--     Fonts and icons     -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+      rel="stylesheet" />
+    <!-- Nucleo Icons -->
+    <link href="/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script
+      src="https://kit.fontawesome.com/42d5adcbca.js"
+      crossorigin="anonymous"></script>
+    <link href="/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link
+      id="pagestyle"
+      href="/css/argon-dashboard.css?v=2.0.4"
+      rel="stylesheet" />
+
+    
+      <html>
+<head>
+<title>My first chart using FusionCharts Suite XT</title>
+<!-- Include fusioncharts core library -->
+<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+<!-- Include fusion theme -->
+<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+
+<% if (locals.page_name && locals.accountBalance) { %>
+<% if (page_name === 'dashboard' && accountBalance) { %>
+  
+  <script type="text/javascript">
+    //STEP 2 - Chart Data
+    var attendanceData = <%- JSON.stringify(attendanceData) %>;
+    var inProgressSections = <%- JSON.stringify(inProgressSections) %>;
+   
+    
+
+    var chartData = inProgressSections.map((x,i) =>{
+      return { 'label': x, 'value' : attendanceData[i]}
+    });
+
+
+    //STEP 3 - Chart Configurations
+    const chartConfig = {
+    type: 'column3d',
+    renderAt: 'chart-container',
+    width: '70%',
+    height: '300',
+    dataFormat: 'json',
+    dataSource: {
+        // Chart Configuration
+        "chart": {
+          "theme" : "fusion",
+          "yAxisMaxValue": "100",
+            "caption": "Attendance Record",
+            "subCaption": "Semester",
+            "xAxisName": "Section Code",
+            "yAxisName": "Percentage",
+            "numberSuffix": "%",
+            "canvasBgAlpha": "0",
+            //Background color and alpha
+            "bgColor": "#F8F9FA",
+            "bgAlpha": "100",
+            },
+        // Chart Data
+        "data": chartData
+        }
+    };
+    FusionCharts.ready(function(){
+    var fusioncharts = new FusionCharts(chartConfig);
+    fusioncharts.render();
+    });
+
+</script>
+<% } %>
+<% } %>
+<% if (locals.page_name) { %>
+ <% if (page_name == 'editmarks') { %>
+  <script> 
+    var markingSchemeData = <%- JSON.stringify(markingSchemeData) %>;
+   
+    function changeTotalMarks(x) {
+     // document.getElementsByClassName("message")
+  
+    let inpName = x.name
+    let sum=0,grade,gpa;
+    var elements = document.querySelectorAll(`input[name$=${x.name}]`);
+    elements.forEach((x) =>
+    {
+     
+      if(!x.value)
+      {
+        x.value = 0;
+      }
+      sum = sum + parseFloat(x.value)
+      sum = Math.round(sum)
+    })
+    var num = inpName.replace(/[^0-9]/g, '');
+  
+    var totalMarks = document.getElementById(`totalMarks${num}`);
+    var zGrade = document.getElementById(`zGrade${num}`);
+    var zGPA = document.getElementById(`zGPA${num}`);
+    
+    if(sum > 100){
+      sum = 100
+    }
+    
+    markingSchemeData.forEach((x) =>{
+     
+      if(sum >= x.min_marks && sum<=x.max_marks)
+      {
+        grade = x.grade;
+        gpa = x.score;
+      }
+    })
+    totalMarks.innerHTML = sum;
+    zGrade.innerHTML = grade;
+    zGPA.innerHTML = gpa;
+    
+
+    }
+  </script>
+ <% } %>
+<% } %>
+
+
+  </head>
+  <link href="/css/home.css" rel="stylesheet" />
+

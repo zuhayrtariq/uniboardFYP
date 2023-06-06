@@ -1,0 +1,45 @@
+<%- include('partials/studenthead') %>
+<div class="container-fluid py-4 min-vh-100">
+  <% if(locals.mes){ %>
+    <div class="alert bg-success text-white fw-bold  alert-dismissible fade show" role="alert">
+      <% if (mes == 1 ) { %>
+        <strong>Transaction Successful. PKR <%= amount  %> Credited  in Student Account :  <%=globalStudentId%> </strong> 
+      <% } %>
+      </div>
+      <%   } %>
+  <div class="table-responsive ">
+    <table class="   table align-items-center mb-0 table-responsive-sm table-group-divider">
+      <thead class="bg-gradient-dark text-bg-dark">
+        <tr class="align-middle text-center">
+         
+          <th class="text-uppercase text-xs font-weight-bolder opacity-7">Description</th>
+          <th class="text-uppercase text-xs font-weight-bolder opacity-7 ps-2">Amount</th>
+          
+         
+         
+        </tr>
+      </thead>
+      <tbody class="bg-white text-bg-white">
+        <tr>
+          <td>
+            <p class="text-sm font-weight-bold mb-0 text-center">Current Balance</p>
+           
+          </td>
+        <td>
+          <p class="text-sm font-weight-bold mb-0 text-center">PKR <%= account_amount  %></p>
+         
+        </td></tr>
+      </tbody>
+    </table> 
+  </div>
+  <form action="./addbalance" method="POST">
+    <div class="text-end mr-2 mt-5">
+    
+     
+        <input type="text" name="amount" min="500" max="300000" required placeholder="Enter Amount in PKR">
+        <br>
+        <button type="submit" class="btn btn-success mt-2" id="checkout-button">Add Balance</button>
+     
+    </div> </form>
+  </div>
+<%- include('partials/footer') %>

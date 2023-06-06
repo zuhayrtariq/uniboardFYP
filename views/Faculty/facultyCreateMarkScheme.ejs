@@ -1,0 +1,97 @@
+<%- include('partials/facultyhead') %>
+<div class="container-fluid py-4 min-vh-80">
+    <% if (error == 'DUP_NAME') { %>
+        <div class="alert alert-danger text-white border-0 " role="alert">
+            <strong>Error Duplicate Marks Description </strong> 
+        </div>
+       <% } else if(error == 'TOTAL_MARKS_E'){  %>
+        <div class="alert alert-danger text-white border-0 " role="alert">
+            <strong>Total Marks Value Is Not Equal To 100 </strong> 
+        </div>
+         <% } %>
+      <div class="table-responsive">
+        <form id="saveForm" action="./createscheme"></form>
+        <form id="addForm" action="./addtoscheme"></form>
+        <div class="card">
+            <div class="table-responsive">
+              <table class="table align-items-center mb-0 table-group-divider">
+                <thead class=" text-white bg-default">
+                    <tr>
+                        
+                    <th class="text-uppercase text-sm font-weight-bolder text-center" colspan="3">Marking Scheme Section : <%= sectionCode %> </th>
+                    <input type="text" name="sectionCode" value="<%= sectionCode %>" form="saveForm" hidden>
+                    </tr>
+                  <tr class="align-middle text-center">
+                   
+                    <th class="text-uppercase text-sm font-weight-bolder ">Description</th>
+                    
+                    <th class="text-uppercase text-sm font-weight-bolder  ">Total Marks</th>
+                   
+                        <th class="text-uppercase text-sm font-weight-bolder  ">Option</th>
+                   
+                  </tr>
+                </thead>
+                <tbody id="myTable">
+                  
+                     
+                    
+                    <% markingScheme.forEach((x,i) => { %>
+                    <tr>
+                      
+                       
+                        
+                            
+
+                                <td class="align-middle text-center "><p><%=x.name%></p></td> 
+                                <input type="text" name="marksType[]" value="<%=x.name%>" form="saveForm" hidden>
+
+                           
+                           <td class="align-middle text-center "><input type="number" name="totalMarks[]" value="<%=x.totalMarks%>" form="saveForm"></td> 
+                           
+                           <td class="align-middle  text-center ">
+                            <% if (x.name != 'Final') { %>
+                            <button type="submit" class="mt-2 btn btn-danger " name="marksToDelete" value="<%=x.name%>" form="saveForm">Delete</button></td> 
+                            <% } %>
+                      </tr>
+                      <% }) %> 
+                   
+                      <tr>
+                      
+                        <td class="align-middle text-center "> 
+                            <select name="marksType[]"  form="saveForm">
+                                <option value="" disabled selected>Add New Marks</option>
+                            <% marksType.forEach(x => { %>
+                               <option  value=<%=x%>><%=x%></option>
+                                <% }) %> 
+
+                        </select> </td>
+                       
+                           <td class="align-middle text-center "> <input type="number" name="totalMarks[]" form="saveForm"> </td> 
+                        <td class="align-middle  text-center ">
+                            <button type="submit" class="mt-2 btn btn-github " form="saveForm" name="formButton" value="0">Add</button></td> 
+                       
+                    
+                   </tr>
+                     
+                     
+                </tbody>
+             
+            </table>
+            
+            </div>
+           
+          </div>
+          <div class="text-end mr-2 mt-2">
+            <button type="submit" class="btn btn-success text-end"  form="saveForm" name="formButton" value="1" >Save</button>
+          </div>
+       
+      </div>  
+      </div>
+<%- include('partials/footer') %>
+
+
+
+
+
+
+
